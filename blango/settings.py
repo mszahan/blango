@@ -122,6 +122,17 @@ class Dev(Configuration):
     ]
 
 
+
+    # this chunks of code is to hash password in Argon2 as default
+    PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    ]
+
+
+
     # Internationalization
     # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
