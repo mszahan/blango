@@ -5,13 +5,23 @@ from django.utils import timezone
 from blog.models import Post
 from blog.forms import CommentForm
 
+#for caching
+# from django.views.decorators.cache import cache_page
+# from django.views.decorators.vary import vary_on_cookie
+
 
 # step2 for logging 
 logger = logging.getLogger(__name__)
 
 
+# @cache_page(300)
+# @vary_on_cookie # this will change the chaching based on the cookie data cahnges that is the request.user
 def index(request):
+  # for checking the chaching flaws
+    # from django.http import HttpResponse
+    # return HttpResponse(str(request.user).encode("ascii"))
     posts = Post.objects.filter(published_at__lte=timezone.now())
+    
     # for loggin the number of posts added
     logger.debug("Got %d posts", len(posts))
 

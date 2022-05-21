@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% load blog_extras %}
+<!-- load template all the tags with single load -->
+{% load blog_extras cache %}
+
 
 {% block content %}
 
@@ -20,7 +22,12 @@
 
 {% row %}
     <div class="col">
-        {% recent_post post %}
+        <!-- cache template tags takes two arguments -time in seconds -name of the block may be -->
+        <!-- the extra argument is for more specific only for single post maybe -->
+        {% cache 3600 recent_posts post %}
+            {% recent_posts post %}
+        {% endcache %}
+
    </div>
 {% endrow %}
 
