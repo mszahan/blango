@@ -20,7 +20,31 @@ def index(request):
   # for checking the chaching flaws
     # from django.http import HttpResponse
     # return HttpResponse(str(request.user).encode("ascii"))
-    posts = Post.objects.filter(published_at__lte=timezone.now())
+
+    # the select_related is for fetching multiple table data by joining them .....
+    # So this will optimize the database than fetching data from multiple table simultaneously...
+    # this tecnique reduces the number of query
+    posts = Post.objects.filter(published_at__lte=timezone.now()).select_related("author")
+
+    ## ...... this should not be used as it need constant update if new field is added to model...
+    ## .. at the same time it does not speed up much...
+    
+    ## this only fetching the included column from the database table
+    # posts = (
+    # Post.objects.filter(published_at__lte=timezone.now())
+    # .select_related("author")
+    # .only("title", "summary", "content", "author", "published_at", "slug")
+    # )
+
+    # # this one does the similar task as previous....
+    # # but this one rquires less code to fetch more data
+    # posts = (
+    # Post.objects.filter(published_at__lte=timezone.now())
+    # .select_related("author")
+    # .defer("created_at", "modified_at")
+    # )
+
+
     
     # for loggin the number of posts added
     logger.debug("Got %d posts", len(posts))
@@ -56,3 +80,8 @@ def post_detail(request, slug):
 
 
     return render(request, "blog/post-detail.html", {"post": post, "comment_form": comment_form})
+
+# this view is to find out the ip address
+def get_ip(request):
+  from django.http import HttpResponse
+  return HttpResponse(request.META['REMOTE_ADDR'])
