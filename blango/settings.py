@@ -204,6 +204,14 @@ class Dev(Configuration):
 
     # for making the custom model as the default user model
     AUTH_USER_MODEL = "blango_auth.User"
+
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    ACCOUNT_ACTIVATION_DAYS = 2
+    # REGISTRATION_OPEN = False
+
+
+
+
     
 
 
