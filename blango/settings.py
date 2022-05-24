@@ -53,12 +53,18 @@ class Dev(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        
+        #local
+        'blango_auth', # this need to before other local app
         'blog',
 
         #third party app
         'crispy_forms',
         'crispy_bootstrap5',
         'debug_toolbar',
+
+        
+        
     ]
 
     MIDDLEWARE = [
@@ -195,6 +201,10 @@ class Dev(Configuration):
 
 
     INTERNAL_IPS = ["192.168.10.226"]
+
+    # for making the custom model as the default user model
+    AUTH_USER_MODEL = "blango_auth.User"
+    
 
 
 
