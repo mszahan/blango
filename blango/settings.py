@@ -52,6 +52,7 @@ class Dev(Configuration):
         'django.contrib.contenttypes',
         'django.contrib.sessions',
         'django.contrib.messages',
+        'django.contrib.sites',  # this one is required for django-allauth .... you can run multiple similar website with this app(site framework)
         'django.contrib.staticfiles',
         
         #local
@@ -63,7 +64,14 @@ class Dev(Configuration):
         'crispy_bootstrap5',
         'debug_toolbar',
 
-        
+        #django-allauth apps
+        'allauth',
+        'allauth.account',
+        'allauth.socialaccount',
+        'allauth.socialaccount.providers.google',
+
+        # most confusing thing is we have installed third party app....
+        # django-registration but it didn't require to add here
         
     ]
 
@@ -208,6 +216,17 @@ class Dev(Configuration):
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
     ACCOUNT_ACTIVATION_DAYS = 2
     # REGISTRATION_OPEN = False
+
+    SITE_ID = 1
+
+    # as we have removed the username field in our custom auth....
+    # we need this extra line of code to avoid error
+    ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+    ACCOUNT_EMAIL_REQUIRED = True
+    ACCOUNT_USERNAME_REQUIRED = False
+    ACCOUNT_AUTHENTICATION_METHOD = "email"
+
+
 
 
 
