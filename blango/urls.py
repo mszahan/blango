@@ -28,6 +28,10 @@ urlpatterns = [
     # this is for the activation url
     path("accounts/", include("django_registration.backends.activation.urls")),
 
+    # for api
+    path("api/v1/", include("blog.api_urls")),
+
+
 
 
 
